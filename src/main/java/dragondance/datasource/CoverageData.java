@@ -92,8 +92,8 @@ public class CoverageData implements AutoCloseable {
 		for (Long key : covData1.addressMap.keySet()) {
 			if (!covData2.addressMap.containsKey(key)) {
 				inst = covData1.lookupAddressMapSingle(key);
-				
-				lastRange = diffResult.pushRangeListNoThrow(lastRange, inst.getAddr(), inst.getSize(), false);
+				if (inst != null)
+					lastRange = diffResult.pushRangeListNoThrow(lastRange, inst.getAddr(), inst.getSize(), false);
 			}
 		}
 		
