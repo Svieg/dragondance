@@ -333,11 +333,12 @@ public class CoverageData implements AutoCloseable {
 		
 		Log.info("Generating initial code ranges. Total block entry: %d",source.entries.size());
 		
-		for (BlockEntry be : source.entries) {
+		for (Integer offset : source.entries.keySet()) {
 			
-			addr = imgBase + be.getOffset();
+			addr = imgBase + offset;
 
 			if (DragonHelper.getInstructionNoThrow(DragonHelper.getAddress(addr), true) != null) {
+				BlockEntry be = source.entries.get(offset);
 				codeRange = pushRangeList(codeRange, addr, be.getSize(), true);
 			} else {
 				Log.warning("Ignored invalid instruction at addr %s when building ranges", Long.toHexString(addr));

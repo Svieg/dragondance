@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import dragondance.Log;
@@ -27,7 +28,7 @@ public class CoverageDataSource implements AutoCloseable{
 	protected int entryTableSize=0;
 	
 	protected List<ModuleInfo> modules;
-	protected List<BlockEntry> entries;
+	protected HashMap<Integer, BlockEntry> entries;
 	
 	protected String mainModuleName = null;
 	protected ModuleInfo mainModule = null;
@@ -57,7 +58,7 @@ public class CoverageDataSource implements AutoCloseable{
 		this.buf = ByteBuffer.allocate(1 * 1024 * 1024);
 		
 		this.modules = new ArrayList<ModuleInfo>();
-		this.entries = new ArrayList<BlockEntry>();
+		this.entries = new HashMap<Integer, BlockEntry>();
 		
 		readIntoBuffer();
 		
@@ -290,6 +291,7 @@ public class CoverageDataSource implements AutoCloseable{
 				mapValues[0].intValue(),
 				mapValues[1].intValue(),
 				mapValues[2].intValue(),
+				0,
 				0);
 		
 		return be;
@@ -306,7 +308,8 @@ public class CoverageDataSource implements AutoCloseable{
 				mapValues[0].intValue(),
 				mapValues[1].intValue(),
 				mapValues[2].intValue(),
-				mapValues[3].intValue());
+				mapValues[3].intValue(),
+				0);
 		
 		return be;
 	}
@@ -336,7 +339,7 @@ public class CoverageDataSource implements AutoCloseable{
 	
 	protected void pushEntry(BlockEntry entry) {
 		if (this.mainModule == null || (this.mainModule != null && isMainModuleEntry(entry))) {
-			this.entries.add(entry);
+			this.entries.put(entry.getOffset(), entry);
 		}
 	}
 	
