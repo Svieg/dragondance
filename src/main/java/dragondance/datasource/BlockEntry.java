@@ -34,4 +34,8 @@ public class BlockEntry {
 	public final int getHitCount() {
 		return this.hitCount;
 	}
+	
+	public final void incrementHitCount() {
+		this.hitCount = this.hitCount + 1;
+	}
 }

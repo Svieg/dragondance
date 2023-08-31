@@ -339,7 +339,14 @@ public class CoverageDataSource implements AutoCloseable{
 	
 	protected void pushEntry(BlockEntry entry) {
 		if (this.mainModule == null || (this.mainModule != null && isMainModuleEntry(entry))) {
-			this.entries.put(entry.getOffset(), entry);
+			Integer offset = entry.getOffset();
+			if (!this.entries.containsKey(offset)) {
+				this.entries.put(entry.getOffset(), entry);
+			}
+			else {
+				BlockEntry be = this.entries.get(offset);
+				be.incrementHitCount();
+			}
 		}
 	}
 	
