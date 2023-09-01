@@ -292,7 +292,7 @@ public class CoverageDataSource implements AutoCloseable{
 				mapValues[1].intValue(),
 				mapValues[2].intValue(),
 				0,
-				0);
+				1);
 		
 		return be;
 	}
@@ -309,7 +309,7 @@ public class CoverageDataSource implements AutoCloseable{
 				mapValues[1].intValue(),
 				mapValues[2].intValue(),
 				mapValues[3].intValue(),
-				0);
+				1);
 		
 		return be;
 	}
