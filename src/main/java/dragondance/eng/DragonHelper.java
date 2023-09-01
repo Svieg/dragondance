@@ -123,6 +123,10 @@ public class DragonHelper {
 		return fapi.getCurrentProgram().getDomainFile().getName();
 	}
 	
+	public static PluginTool getTool() {
+		return tool;
+	}
+	
 	
 	public static GThreadPool getTPool() {
 		if (tpool == null) {
