@@ -44,6 +44,7 @@ import ghidra.program.model.address.Address;
 import ghidra.program.model.address.AddressSet;
 import ghidra.program.model.listing.CodeUnit;
 import ghidra.program.model.listing.Instruction;
+import ghidra.program.model.listing.Program;
 import ghidra.program.model.mem.MemoryBlock;
 import ghidra.util.Msg;
 import ghidra.util.SystemUtilities;
@@ -119,6 +120,10 @@ public class DragonHelper {
 		return true;
 	}
 	
+	public static Program getProgram() {
+		return fapi.getCurrentProgram();
+	}
+
 	public static String getProgramName() {
 		return fapi.getCurrentProgram().getDomainFile().getName();
 	}
@@ -126,7 +131,6 @@ public class DragonHelper {
 	public static PluginTool getTool() {
 		return tool;
 	}
-	
 	
 	public static GThreadPool getTPool() {
 		if (tpool == null) {
