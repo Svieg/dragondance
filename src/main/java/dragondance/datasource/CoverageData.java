@@ -17,6 +17,10 @@ import dragondance.eng.session.Session;
 import dragondance.eng.session.SessionManager;
 import dragondance.exceptions.InvalidInstructionAddress;
 import dragondance.exceptions.OperationAbortedException;
+import ghidra.app.cmd.comments.SetCommentsCmd;
+import ghidra.program.model.address.Address;
+import ghidra.framework.cmd.Command;
+import ghidra.framework.plugintool.PluginTool;
 
 class CodeRangeComparator implements Comparator<CodeRange> {
 
@@ -429,12 +433,25 @@ public class CoverageData implements AutoCloseable {
 			}
 		}
 		
+		commentHitCount();
+
 		DragonHelper.finishTransaction(transId,!failed);
 		
 		if (!failed)
 			this.visualized=true;
 	}
 	
+	public void commentHitCount() {
+		for (Integer blockAddress: this.source.entries.keySet()) {
+			Address baseAddress = DragonHelper.getImageBase();
+			Address blockAddr = baseAddress.add(blockAddress);
+			BlockEntry be = this.source.entries.get(blockAddress);
+			Command cmd = new SetCommentsCmd(blockAddr, be.getHitCount().toString(), "", "", "", "");
+			PluginTool tool = DragonHelper.getTool();
+			tool.execute(cmd, DragonHelper.getProgram());
+		}
+	}
+
 	public void clearPaint() {
 		
 		if (!this.visualized)
