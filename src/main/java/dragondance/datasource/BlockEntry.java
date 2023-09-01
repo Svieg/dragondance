@@ -31,7 +31,7 @@ public class BlockEntry {
 		return this.instCount;
 	}
 	
-	public final int getHitCount() {
+	public final Integer getHitCount() {
 		return this.hitCount;
 	}
 	
